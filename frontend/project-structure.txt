@@ -1,0 +1,59 @@
+.
+├── README.md
+├── axiosConfig.js
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── project-structure.txt
+├── public
+│   └── vite.svg
+├── src
+│   ├── App.jsx
+│   ├── assets
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   ├── 3.png
+│   │   ├── 4.png
+│   │   ├── 5.png
+│   │   ├── 6.png
+│   │   ├── banner.png
+│   │   ├── clother33.png
+│   │   ├── featured.webp
+│   │   ├── login.webp
+│   │   ├── login1.png
+│   │   ├── mens-collection.webp
+│   │   ├── rabbit-hero.webp
+│   │   ├── react.svg
+│   │   ├── register.webp
+│   │   ├── register2.png
+│   │   └── womens-collection.webp
+│   ├── components
+│   │   ├── Admin
+│   │   ├── Cart
+│   │   ├── Common
+│   │   ├── Layout
+│   │   └── Products
+│   ├── index.css
+│   ├── main.jsx
+│   ├── pages
+│   │   ├── AdminHomePage.jsx
+│   │   ├── CollectionPage.jsx
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── MyBrowsingHistory.jsx
+│   │   ├── MyFavorites.jsx
+│   │   ├── MyOrdersPage.jsx
+│   │   ├── OrderConfirmationPage.jsx
+│   │   ├── OrderDetailsPage.jsx
+│   │   ├── Profile.jsx
+│   │   └── Register.jsx
+│   └── redux
+│       ├── slices
+│       └── store.js
+├── tailwind.config.js
+├── vercel.json
+└── vite.config.js
+
+13 directories, 44 files
