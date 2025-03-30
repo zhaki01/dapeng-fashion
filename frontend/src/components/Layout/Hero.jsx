@@ -18,7 +18,7 @@ const Hero = () => {
             基于你的喜好与筛选，推荐你的专属穿搭风格
           </p>
           <Link
-            to="#"
+            to="/collections/all"
             className="bg-white text-gray-950 px-6 py-2 rounded-sm text-lg"
           >
             现在购物🛒

@@ -116,7 +116,7 @@ const Navbar = () => {
           </button>
         </div>
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-4">Menu</h2>
+          <h2 className="text-xl font-semibold mb-4">导航</h2>
           <nav className="space-y-4">
             <Link
               to="/collections/all?gender=男士"
