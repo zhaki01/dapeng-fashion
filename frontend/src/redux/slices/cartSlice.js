@@ -1,4 +1,10 @@
 //cartSlice.js
+// 加注释
+// 该文件定义了一个 Redux slice，用于管理购物车的状态和异步操作
+// 该文件使用 Redux Toolkit 的 createSlice 和 createAsyncThunk 来简化 Redux 的使用
+// 该文件还使用了 axios 来进行 HTTP 请求
+// 该文件导出了一个 reducer，用于在 Redux store 中管理购物车的状态
+// 该文件还导出了几个异步操作，用于获取购物车、添加商品到购物车、更新商品数量、移除商品和合并购物车
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 

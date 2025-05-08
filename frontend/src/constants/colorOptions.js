@@ -1,0 +1,23 @@
+// src/constants/colorOptions.js
+export const colorMap = {
+  Black: "黑色",
+  White: "白色",
+  Gray: "灰色",
+  Navy: "藏青",
+  Red: "红色",
+  Blue: "蓝色",
+  Beige: "米色",
+  Green: "绿色",
+  Pink: "粉色",
+  Yellow: "黄色",
+  "Light Blue": "浅蓝",
+  "Dark Blue": "深蓝",
+  Burgundy: "酒红",
+  "Tropical Print": "热带印花",
+  "Navy Palms": "棕榈印花",
+  Charcoal: "深灰",
+  Olive: "橄榄绿",
+  Brown: "棕色",
+  Khaki: "卡其",
+  Lavender: "薰衣草紫",
+};

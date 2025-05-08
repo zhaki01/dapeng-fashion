@@ -5,20 +5,35 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@/utils/axiosConfig";
 
 // 新增：根据用户偏好风格推荐商品
+// export const fetchProductsByPreference = createAsyncThunk(
+//   "products/fetchByPreference",
+//   async (_, { getState }) => {
+//     const { user } = getState().auth;
+//     const res = await axiosInstance.get(`/api/history/preferences`, {
+//       headers: {
+//         Authorization: `Bearer ${user.token}`,
+//       },
+//     });
+//     const { preferences } = res.data;
+//     const filterRes = await axiosInstance.get(`/api/products`, {
+//       params: { collection: preferences.join(",") },
+//     });
+//     return filterRes.data;
+//   }
+// );
+
+// 新增：根据用户偏好风格推荐商品（修正版）
 export const fetchProductsByPreference = createAsyncThunk(
   "products/fetchByPreference",
   async (_, { getState }) => {
     const { user } = getState().auth;
-    const res = await axiosInstance.get(`/api/history/preferences`, {
+    if (!user) return [];
+    const response = await axiosInstance.get(`/api/favorites/recommendations`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    const { preferences } = res.data;
-    const filterRes = await axiosInstance.get(`/api/products`, {
-      params: { collection: preferences.join(",") },
-    });
-    return filterRes.data;
+    return response.data;
   }
 );
 

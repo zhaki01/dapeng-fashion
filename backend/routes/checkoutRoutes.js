@@ -1,5 +1,6 @@
 // checkoutRoutes包含了结账会话的所有路由，包括创建结账会话、支付结账会话、生成订单等功能
 // 该文件使用了Express框架和Mongoose库来处理HTTP请求和与MongoDB数据库的交互
+// checkoutRoutes.js
 const express = require("express");
 const Checkout = require("../models/Checkout");
 const Cart = require("../models/Cart");

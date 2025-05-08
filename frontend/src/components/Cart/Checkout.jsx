@@ -1,5 +1,5 @@
 // Checkout page component
-//
+// Checkout.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PayPalButton from "./PayPalButton";

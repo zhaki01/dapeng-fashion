@@ -19,5 +19,22 @@ router.get("/", protect, admin, async (req, res) => {
     res.status(500).json({ message: "服务器错误，无法获取商品列表" });
   }
 });
+// POST /api/admin/products - 添加新商品（管理员权限）
+
+// POST /api/admin/products - 添加新商品（管理员权限）
+router.post("/", protect, admin, async (req, res) => {
+  try {
+    const newProduct = new Product({
+      ...req.body,
+      user: req.user._id, // ✅ 加上当前管理员的 ID
+    });
+
+    const createdProduct = await newProduct.save();
+    res.status(201).json(createdProduct);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "添加商品失败" });
+  }
+});
 
 module.exports = router;

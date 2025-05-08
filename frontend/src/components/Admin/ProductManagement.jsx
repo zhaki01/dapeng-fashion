@@ -1,21 +1,20 @@
 // ProductManagement.jsx
-// 商品管理组件
-// 该组件用于显示和管理商品，包括商品名称、价格、SKU 编号等
-// 该组件使用了 Redux 来管理状态，并使用了 React Router 来处理路由
-// 该组件使用了 useEffect 来获取商品数据，并在组件加载时进行数据请求
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   deleteProduct,
   fetchAdminProducts,
 } from "../../redux/slices/adminProductSlice";
+import AddProductModal from "./AddProductModal";
 
 const ProductManagement = () => {
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector(
     (state) => state.adminProducts
   );
+
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAdminProducts());
@@ -31,8 +30,18 @@ const ProductManagement = () => {
   if (error) return <p className="text-red-500">错误: {error}</p>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-6 relative">
       <h2 className="text-3xl font-bold text-[#1F7D53] mb-6">商品管理</h2>
+
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          添加商品
+        </button>
+      </div>
+
       <div className="overflow-x-auto shadow-md rounded-xl bg-white">
         <table className="min-w-full text-left text-sm text-gray-700">
           <thead className="bg-gray-100 text-xs uppercase text-gray-600">
@@ -81,6 +90,11 @@ const ProductManagement = () => {
           </tbody>
         </table>
       </div>
+
+      {/* 添加商品弹窗 */}
+      {showAddModal && (
+        <AddProductModal onClose={() => setShowAddModal(false)} />
+      )}
     </div>
   );
 };

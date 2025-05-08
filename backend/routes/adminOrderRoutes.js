@@ -1,6 +1,7 @@
 // adminOrderRoutes包含了管理员对订单的操作路由
 // 该文件定义了获取所有订单、更新订单状态和删除订单的路由
 // 这些路由都需要管理员权限才能访问
+// adminOrderRoutes.js
 const express = require("express");
 const Order = require("../models/Order");
 const { protect, admin } = require("../middleware/authMiddleware");

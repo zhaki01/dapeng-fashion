@@ -1,4 +1,11 @@
 // adminProductSlice.js
+// 加注释中文
+// 该文件定义了一个 Redux slice，用于管理管理员产品的状态和异步操作
+// 该文件使用 Redux Toolkit 的 createSlice 和 createAsyncThunk 来简化 Redux 的使用
+// 该文件还使用了 axios 来进行 HTTP 请求
+// 该文件导出了一个 reducer，用于在 Redux store 中管理产品的状态
+// 该文件还导出了几个异步操作，用于获取所有产品、创建新产品、更新产品和删除产品
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios";
 // import axiosInstance from "../../axiosConfig"; // 确保 axios 实例已配置好

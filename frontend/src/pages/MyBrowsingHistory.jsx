@@ -33,9 +33,18 @@ const MyBrowsingHistory = () => {
   }, []);
 
   // 从每条记录中提取 product 数据（假设后端已 populate）
-  const products = historyRecords
-    .map((record) => record.productId)
-    .filter((product) => product); // 过滤掉没有填充数据的记录
+  // const products = historyRecords
+  //   .map((record) => record.productId)
+  //   .filter((product) => product); // 过滤掉没有填充数据的记录
+
+  const products = Array.from(
+    new Map(
+      historyRecords
+        .map((record) => record.productId)
+        .filter((product) => product)
+        .map((p) => [p._id, p]) // 用 _id 去重
+    ).values()
+  );
 
   return (
     <div>

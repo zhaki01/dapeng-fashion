@@ -1,3 +1,5 @@
+// axiosConfig.js
+// This file configures the Axios instance for making HTTP requests.
 import axios from "axios";
 import { toast } from "sonner";
 import { logout } from "@/redux/slices/authSlice";

@@ -23,7 +23,7 @@ import UserStatistics from "./components/Admin/UserStatistics";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
-
+import CreateProductPage from "./pages/CreateProductPage";
 const App = () => {
   return (
     <Provider store={store}>
@@ -61,10 +61,10 @@ const App = () => {
             <Route index element={<AdminHomePage />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="/admin/user-statistics" element={<UserStatistics />} />
-
             <Route path="products" element={<ProductManagement />} />
             <Route path="products/:id/edit" element={<EditProductPage />} />
             <Route path="orders" element={<OrderManagement />} />
+            <Route path="products/create" element={<CreateProductPage />} />;
           </Route>
         </Routes>
       </BrowserRouter>

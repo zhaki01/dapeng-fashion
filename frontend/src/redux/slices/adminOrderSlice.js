@@ -1,4 +1,10 @@
 // adminOrderSlice.js
+// 加注释
+// 该文件定义了一个 Redux slice，用于管理管理员订单的状态和异步操作
+// 该文件使用 Redux Toolkit 的 createSlice 和 createAsyncThunk 来简化 Redux 的使用
+// 该文件还使用了 axios 来进行 HTTP 请求
+// 该文件导出了一个 reducer，用于在 Redux store 中管理订单的状态
+// 该文件还导出了几个异步操作，用于获取所有订单、更新订单状态和删除订单
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios";
 // import axiosInstance from "../../axiosConfig"; // 确保 axios 实例已配置好

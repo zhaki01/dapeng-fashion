@@ -1,7 +1,7 @@
 // 这是一个展示男女系列和上装、下装系列的组件
 
 //  GenderCollectionSection;
-
+// GenderCollectionSection.jsx
 import { Link } from "react-router-dom";
 import mensCollectionImage from "../../assets/5.png";
 import womensCollectionImage from "../../assets/4.png";

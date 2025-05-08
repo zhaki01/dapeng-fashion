@@ -63,6 +63,7 @@ const AdminSidebar = () => {
           <FaClipboardList /> {/* 可替换成其他图标 */}
           <span>用户统计</span>
         </NavLink>
+        {/* <NavLink to="/admin/products/create">添加商品</NavLink> */}
 
         <NavLink
           to="/admin/products"
@@ -75,6 +76,7 @@ const AdminSidebar = () => {
           <FaBoxOpen />
           <span>商品管理</span>
         </NavLink>
+
         <NavLink
           to="/admin/orders"
           className={({ isActive }) =>

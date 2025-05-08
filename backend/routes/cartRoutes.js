@@ -1,6 +1,7 @@
 // cartRoutes 包含了购物车相关的所有路由，包括添加商品、更新商品数量、删除商品、获取购物车等
 // 以及合并访客购物车和用户购物车的功能
 // 该文件使用了 Express 框架和 Mongoose ODM 来处理 MongoDB 数据库的操作
+// cartRoutes.js
 const express = require("express");
 const Cart = require("../models/Cart");
 const Product = require("../models/Product");

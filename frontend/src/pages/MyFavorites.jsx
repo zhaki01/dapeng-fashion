@@ -1,4 +1,5 @@
 // export default MyFavorites;
+// MyFavorites.jsx
 import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import axiosInstance from "../utils/axiosConfig"; // 确保 axios 实例已配置好

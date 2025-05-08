@@ -6,6 +6,7 @@
 ├── package.json
 ├── postcss.config.js
 ├── project-structure.txt
+├── project-structure1.txt
 ├── public
 │   └── vite.svg
 ├── src
@@ -57,4 +58,4 @@
 ├── vercel.json
 └── vite.config.js
 
-14 directories, 44 files
+14 directories, 45 files

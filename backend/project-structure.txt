@@ -1,0 +1,37 @@
+.
+├── config
+│   └── db.js
+├── data
+│   └── products.js
+├── middleware
+│   └── authMiddleware.js
+├── models
+│   ├── BrowsingHistory.js
+│   ├── Cart.js
+│   ├── Checkout.js
+│   ├── Favorite.js
+│   ├── Order.js
+│   ├── Product.js
+│   ├── Subscriber.js
+│   └── User.js
+├── package-lock.json
+├── package.json
+├── project-structure.txt
+├── routes
+│   ├── adminOrderRoutes.js
+│   ├── adminRoutes.js
+│   ├── cartRoutes.js
+│   ├── checkoutRoutes.js
+│   ├── favoriteRoutes.js
+│   ├── historyRoutes.js
+│   ├── orderRoutes.js
+│   ├── productAdminRoutes.js
+│   ├── productRoutes.js
+│   ├── subscribeRoute.js
+│   ├── uploadRoutes.js
+│   └── userRoutes.js
+├── seeder.js
+├── server.js
+└── vercel.json
+
+6 directories, 29 files

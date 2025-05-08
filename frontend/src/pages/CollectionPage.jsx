@@ -1,4 +1,5 @@
 // CollectionPage component
+// CollectionPage.jsx
 import { useEffect, useRef, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import FilterSidebar from "../components/Products/FilterSidebar";
