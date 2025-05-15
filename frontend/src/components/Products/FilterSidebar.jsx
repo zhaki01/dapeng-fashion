@@ -1,11 +1,16 @@
-//  FilterSidebar.jsx
-//  FilterSidebar;
+// FilterSidebar.jsx
+// ✅ 商品筛选侧边栏组件（用于商品列表页面）
+// 提供多维筛选选项（如分类、性别、颜色、尺码、品牌、价格等），
+// 用户选择后会自动更新 URL 参数，并刷新商品列表
+
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom"; // ⬅️ 用于操作 URL 查询参数
 
 const FilterSidebar = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams(); // ⬅️ 获取并设置 URL 查询参数
+  const navigate = useNavigate(); // ⬅️ 路由跳转（可带参数）
+
+  // 所有筛选项的状态
   const [filters, setFilters] = useState({
     category: "",
     gender: "",
@@ -17,8 +22,11 @@ const FilterSidebar = () => {
     minPrice: 0,
     maxPrice: 900,
   });
+
+  // 控制滑动价格条（视觉组件）
   const [priceRange, setPriceRange] = useState([0, 100]);
 
+  // 各筛选选项的枚举值
   const categories = ["上装", "下装"];
   const colors = [
     "Red",
@@ -81,7 +89,6 @@ const FilterSidebar = () => {
     "优雅交叠",
   ];
   const genders = ["男士", "女士"];
-
   const collections = [
     "商务休闲",
     "正式穿搭",
@@ -109,8 +116,9 @@ const FilterSidebar = () => {
     "职场系列",
   ];
 
+  // 页面加载或 URL 参数变化时，初始化筛选条件状态
   useEffect(() => {
-    const params = Object.fromEntries([...searchParams]);
+    const params = Object.fromEntries([...searchParams]); // 将查询参数转为对象
     setFilters({
       category: params.category || "",
       gender: params.gender || "",
@@ -122,12 +130,14 @@ const FilterSidebar = () => {
       minPrice: params.minPrice || 0,
       maxPrice: params.maxPrice || 100,
     });
-    setPriceRange([0, params.maxPrice || 100]);
+    setPriceRange([0, params.maxPrice || 100]); // 更新价格范围
   }, [searchParams]);
 
+  // ✅ 通用筛选处理（支持单选、多选、颜色按钮）
   const handleFilterChange = (e) => {
     const { name, value, checked, type } = e.target;
     let newFilters = { ...filters };
+
     if (type === "checkbox") {
       newFilters[name] = checked
         ? [...(newFilters[name] || []), value]
@@ -135,10 +145,12 @@ const FilterSidebar = () => {
     } else {
       newFilters[name] = value;
     }
+
     setFilters(newFilters);
-    updateURLParams(newFilters);
+    updateURLParams(newFilters); // 更新 URL 查询参数
   };
 
+  // ✅ 更新浏览器地址栏中的查询参数（同步状态）
   const updateURLParams = (newFilters) => {
     const params = new URLSearchParams();
     Object.keys(newFilters).forEach((key) => {
@@ -148,10 +160,11 @@ const FilterSidebar = () => {
         params.append(key, newFilters[key]);
       }
     });
-    setSearchParams(params);
-    navigate(`?${params.toString()}`);
+    setSearchParams(params); // 设置搜索参数（刷新页面参数）
+    navigate(`?${params.toString()}`); // 主动跳转并触发商品筛选
   };
 
+  // ✅ 价格范围滑动处理
   const handlePriceChange = (e) => {
     const newPrice = e.target.value;
     setPriceRange([0, newPrice]);
@@ -164,7 +177,7 @@ const FilterSidebar = () => {
     <div className="p-4 text-sm">
       <h3 className="text-xl font-semibold text-[#1F7D53] mb-6">筛选条件</h3>
 
-      {/* Category */}
+      {/* 分类筛选（单选） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">分类</label>
         {categories.map((category) => (
@@ -185,7 +198,7 @@ const FilterSidebar = () => {
         ))}
       </div>
 
-      {/* Gender */}
+      {/* 性别筛选（单选） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">性别</label>
         {genders.map((gender) => (
@@ -203,7 +216,7 @@ const FilterSidebar = () => {
         ))}
       </div>
 
-      {/* Color */}
+      {/* 颜色筛选（按钮选择） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">颜色</label>
         <div className="flex flex-wrap gap-2">
@@ -222,7 +235,7 @@ const FilterSidebar = () => {
         </div>
       </div>
 
-      {/* Size */}
+      {/* 尺码筛选（多选） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">尺码</label>
         {sizes.map((size) => (
@@ -240,7 +253,7 @@ const FilterSidebar = () => {
         ))}
       </div>
 
-      {/* Material */}
+      {/* 面料筛选（多选） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">面料</label>
         {materials.map((material) => (
@@ -261,7 +274,7 @@ const FilterSidebar = () => {
         ))}
       </div>
 
-      {/* Brand */}
+      {/* 品牌筛选（多选） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">品牌</label>
         {brands.map((brand) => (
@@ -279,7 +292,7 @@ const FilterSidebar = () => {
         ))}
       </div>
 
-      {/* Collections */}
+      {/* 系列筛选（多选） */}
       <div className="mb-6">
         <label className="block text-[#27391C] font-medium mb-2">系列</label>
         {collections.map((collection) => (
@@ -300,7 +313,7 @@ const FilterSidebar = () => {
         ))}
       </div>
 
-      {/* Price */}
+      {/* 价格范围筛选（滑动条） */}
       <div className="mb-10">
         <label className="block text-[#27391C] font-medium mb-2">
           价格范围
@@ -322,4 +335,4 @@ const FilterSidebar = () => {
   );
 };
 
-export default FilterSidebar;
+export default FilterSidebar; // ✅ 导出侧边栏组件，供商品筛选页使用

@@ -1,25 +1,21 @@
-//cartSlice.js
-// 加注释
-// 该文件定义了一个 Redux slice，用于管理购物车的状态和异步操作
-// 该文件使用 Redux Toolkit 的 createSlice 和 createAsyncThunk 来简化 Redux 的使用
-// 该文件还使用了 axios 来进行 HTTP 请求
-// 该文件导出了一个 reducer，用于在 Redux store 中管理购物车的状态
-// 该文件还导出了几个异步操作，用于获取购物车、添加商品到购物车、更新商品数量、移除商品和合并购物车
+// cartSlice.js
+// 购物车状态管理模块（Redux Slice）
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// 从 localStorage 中读取购物车
+// 📦 从本地 localStorage 加载购物车（若有）
 const loadCartFromStorage = () => {
   const storedCart = localStorage.getItem("cart");
   return storedCart ? JSON.parse(storedCart) : { products: [] };
 };
 
-// 保存购物车到 localStorage
+// 💾 将购物车数据保存到 localStorage
 const saveCartToStorage = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-// 获取用户或游客的购物车
+// ✅ 异步获取购物车（通过 userId 或 guestId）
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async ({ userId, guestId }, { rejectWithValue }) => {
@@ -36,7 +32,7 @@ export const fetchCart = createAsyncThunk(
   }
 );
 
-// 添加商品到购物车
+// ✅ 异步添加商品到购物车
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (
@@ -55,7 +51,7 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-// 更新商品数量
+// ✅ 异步更新购物车中某个商品的数量
 export const updateCartItemQuantity = createAsyncThunk(
   "cart/updateCartItemQuantity",
   async (
@@ -74,7 +70,7 @@ export const updateCartItemQuantity = createAsyncThunk(
   }
 );
 
-// 移除商品
+// ✅ 异步删除购物车中的商品
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async ({ productId, guestId, userId, size, color }, { rejectWithValue }) => {
@@ -91,7 +87,7 @@ export const removeFromCart = createAsyncThunk(
   }
 );
 
-// 合并购物车
+// ✅ 合并访客购物车到用户购物车（登录后调用）
 export const mergeCart = createAsyncThunk(
   "cart/mergeCart",
   async ({ guestId, user }, { rejectWithValue }) => {
@@ -112,14 +108,16 @@ export const mergeCart = createAsyncThunk(
   }
 );
 
+// 🧠 Redux Slice 定义
 const cartSlice = createSlice({
-  name: "cart",
+  name: "cart", // slice 名称
   initialState: {
-    cart: loadCartFromStorage(),
-    loading: false,
-    error: null,
+    cart: loadCartFromStorage(), // 初始购物车状态从本地读取
+    loading: false, // 是否正在加载
+    error: null, // 错误信息
   },
   reducers: {
+    // ✅ 清空购物车（通常在下单成功后调用）
     clearCart: (state) => {
       state.cart = { products: [] };
       localStorage.removeItem("cart");
@@ -127,6 +125,7 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // ===== 获取购物车 =====
       .addCase(fetchCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -140,6 +139,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "获取购物车失败";
       })
+
+      // ===== 添加商品到购物车 =====
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -153,6 +154,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "添加购物车失败";
       })
+
+      // ===== 更新商品数量 =====
       .addCase(updateCartItemQuantity.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -166,6 +169,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "更新商品数量失败";
       })
+
+      // ===== 删除商品 =====
       .addCase(removeFromCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -179,6 +184,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "删除商品失败";
       })
+
+      // ===== 合并购物车（访客 ➜ 登录用户）=====
       .addCase(mergeCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -195,5 +202,8 @@ const cartSlice = createSlice({
   },
 });
 
+// ✅ 导出清空购物车的同步 action
 export const { clearCart } = cartSlice.actions;
+
+// ✅ 导出 reducer，用于在 Redux Store 中注册
 export default cartSlice.reducer;

@@ -1,44 +1,50 @@
-// src/components/Products/ProductDetails.jsx
+// 引入必要的库和工具
+// ProductDetails.jsx
+// File: src/components/Products/ProductDetails.jsx
 import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
-import ProductGrid from "./ProductGrid";
-import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner"; // 用于显示提示信息
+import ProductGrid from "./ProductGrid"; // 商品卡片组件，用于显示推荐商品
+import { useParams, useNavigate } from "react-router-dom"; // 路由工具
+import { useDispatch, useSelector } from "react-redux"; // Redux 工具
 import {
   fetchProductDetails,
   fetchSimilarProducts,
-} from "../../redux/slices/productsSlice";
-import { addToCart } from "../../redux/slices/cartSlice";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-// import axiosInstance from "../../axiosConfig"; // 确保 axios 实例已配置好
-import axiosInstance from "@/utils/axiosConfig";
+} from "../../redux/slices/productsSlice"; // 获取商品详情和相似商品
+import { addToCart } from "../../redux/slices/cartSlice"; // 添加到购物车
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai"; // 收藏图标
+import axiosInstance from "@/utils/axiosConfig"; // Axios 请求配置
+
+// 接收外部传入的 productId（可选）
 const ProductDetails = ({ productId }) => {
-  const { id } = useParams();
+  const { id } = useParams(); // 从 URL 获取商品 ID
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // 从 Redux 获取商品数据和用户信息
   const { selectedProduct, loading, error, similarProducts } = useSelector(
     (state) => state.products
   );
   const { user, guestId } = useSelector((state) => state.auth);
-  const [mainImage, setMainImage] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
-  // 最终使用的产品 id
-  const productFetchId = productId || id;
+  // 本地状态管理
+  const [mainImage, setMainImage] = useState(""); // 当前展示的主图
+  const [selectedSize, setSelectedSize] = useState(""); // 用户选择的尺码
+  const [selectedColor, setSelectedColor] = useState(""); // 用户选择的颜色
+  const [quantity, setQuantity] = useState(1); // 商品数量
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // 防止重复点击
+  const [isFavorite, setIsFavorite] = useState(false); // 收藏状态
 
-  // 点击收藏按钮
+  const productFetchId = productId || id; // 确定最终用于获取数据的商品 ID
+
+  // 用户点击收藏按钮
   const handleFavorite = async () => {
     if (!user) {
-      navigate("/login?redirect=" + window.location.pathname);
+      navigate("/login?redirect=" + window.location.pathname); // 未登录跳转
       return;
     }
     try {
       if (!isFavorite) {
-        const res = await axiosInstance.post(
+        await axiosInstance.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/favorites`,
           { productId: productFetchId },
           {
@@ -47,7 +53,7 @@ const ProductDetails = ({ productId }) => {
             },
           }
         );
-        setIsFavorite(true);
+        setIsFavorite(true); // 更新收藏状态
         toast.success("收藏成功", { duration: 1000 });
       }
     } catch (error) {
@@ -56,7 +62,7 @@ const ProductDetails = ({ productId }) => {
     }
   };
 
-  // 获取产品详情及相似产品
+  // 获取商品详情和相似商品（首次加载时触发）
   useEffect(() => {
     if (productFetchId) {
       dispatch(fetchProductDetails(productFetchId));
@@ -64,26 +70,22 @@ const ProductDetails = ({ productId }) => {
     }
   }, [dispatch, productFetchId]);
 
-  // 设置主图片
+  // 设置默认展示的主图
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
       setMainImage(selectedProduct.images[0].url);
     }
   }, [selectedProduct]);
 
-  // 记录浏览历史：只有当用户已登录且产品 id 存在时触发
+  // 记录浏览历史（仅限登录用户）
   useEffect(() => {
     if (!user || !productFetchId) return;
-    const token = user.token || localStorage.getItem("userToken"); // 如果 Redux 中没有 token，则从 localStorage 中获取
-    if (!token) return; // 没有 token 就直接返回
+    const token = user.token || localStorage.getItem("userToken");
+    if (!token) return;
 
     const recordViewHistory = async () => {
       try {
-        console.log("正在记录浏览历史", {
-          userId: user._id,
-          productId: productFetchId,
-        });
-        const response = await axiosInstance.post(
+        await axiosInstance.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/history/view`,
           { productId: productFetchId },
           {
@@ -93,31 +95,28 @@ const ProductDetails = ({ productId }) => {
             },
           }
         );
-        console.log("浏览记录保存成功:", response.data);
       } catch (error) {
-        console.error("浏览记录保存失败:", {
-          status: error.response?.status,
-          data: error.response?.data,
-          message: error.message,
-        });
+        console.error("浏览记录保存失败:", error);
       }
     };
     recordViewHistory();
   }, [user, productFetchId]);
 
-  // 处理数量变化
+  // 用户点击数量加减按钮
   const handleQuantityChange = (action) => {
     if (action === "plus") setQuantity((prev) => prev + 1);
     if (action === "minus" && quantity > 1) setQuantity((prev) => prev - 1);
   };
 
-  // 处理加入购物车
+  // 用户点击“加入购物车”按钮
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
       toast.error("请先选择尺码和颜色再加入购物车", { duration: 1000 });
       return;
     }
-    setIsButtonDisabled(true);
+
+    setIsButtonDisabled(true); // 防止重复点击
+
     dispatch(
       addToCart({
         productId: productFetchId,
@@ -136,6 +135,7 @@ const ProductDetails = ({ productId }) => {
       });
   };
 
+  // 加载中/出错处理
   if (loading) return <p>加载中...</p>;
   if (error) return <p className="text-red-500">出错啦：{error}</p>;
 
@@ -144,8 +144,9 @@ const ProductDetails = ({ productId }) => {
       {selectedProduct && (
         <div className="max-w-7xl mx-auto bg-white p-8 rounded-3xl shadow-md">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* 图片展示区域 */}
+            {/* 左侧：商品图片区域 */}
             <div>
+              {/* 缩略图 */}
               <div className="flex gap-4 mb-4 overflow-x-auto md:flex-col md:overflow-visible">
                 {selectedProduct.images.map((image, index) => (
                   <img
@@ -161,16 +162,15 @@ const ProductDetails = ({ productId }) => {
                   />
                 ))}
               </div>
-              <div>
-                <img
-                  src={mainImage}
-                  alt="Main Product"
-                  className="w-full h-[500px] object-cover rounded-2xl shadow"
-                />
-              </div>
+              {/* 主图 */}
+              <img
+                src={mainImage}
+                alt="Main Product"
+                className="w-full h-[500px] object-cover rounded-2xl shadow"
+              />
             </div>
 
-            {/* 产品信息区域 */}
+            {/* 右侧：商品信息区域 */}
             <div>
               <h1 className="text-3xl font-bold text-[#18230F] mb-4">
                 {selectedProduct.name}
@@ -182,7 +182,7 @@ const ProductDetails = ({ productId }) => {
               <p className="text-2xl text-[#27391C] mb-4 font-semibold">
                 $ {selectedProduct.price}
               </p>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6">
                 {selectedProduct.description}
               </p>
 
@@ -248,7 +248,7 @@ const ProductDetails = ({ productId }) => {
                 </div>
               </div>
 
-              {/* 加入购物车 */}
+              {/* 加入购物车按钮 */}
               <button
                 onClick={handleAddToCart}
                 disabled={isButtonDisabled}
@@ -274,10 +274,10 @@ const ProductDetails = ({ productId }) => {
                 {isFavorite ? "已收藏" : "加入收藏"}
               </button>
 
-              {/* 产品其他信息 */}
+              {/* 产品规格表 */}
               <div className="mt-10 text-gray-700">
                 <h3 className="text-xl font-bold mb-4 text-[#27391C]">
-                  Characteristics:
+                  产品信息
                 </h3>
                 <table className="w-full text-left text-sm">
                   <tbody>
@@ -295,7 +295,7 @@ const ProductDetails = ({ productId }) => {
             </div>
           </div>
 
-          {/* 相似产品 */}
+          {/* 相似商品推荐 */}
           <div className="mt-20">
             <h2 className="text-2xl text-center font-semibold mb-6 text-[#1F7D53]">
               ✨ 猜你喜欢

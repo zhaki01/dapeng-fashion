@@ -1,16 +1,20 @@
 // Footer.jsx
-// Footer.jsx
-import { IoLogoInstagram } from "react-icons/io";
-import { RiTwitterXLine } from "react-icons/ri";
-import { TbBrandMeta } from "react-icons/tb";
-import { FiPhoneCall } from "react-icons/fi";
-import { Link } from "react-router-dom";
+// 📄 页脚组件
+// 该组件用于电商网站底部显示，包含：订阅模块、分类导航、支持信息、社交媒体链接及版权信息。
+// 使用了 React Icons 图标库 和 React Router 的 Link 组件进行导航跳转。
+
+import { IoLogoInstagram } from "react-icons/io"; // Instagram 图标
+import { RiTwitterXLine } from "react-icons/ri"; // Twitter(X) 图标
+import { TbBrandMeta } from "react-icons/tb"; // Meta(Facebook) 图标
+import { FiPhoneCall } from "react-icons/fi"; // 电话图标
+import { Link } from "react-router-dom"; // 用于内部跳转的链接组件
 
 const Footer = () => {
   return (
     <footer className="border-t py-12 bg-[#F8F9F8]">
+      {/* ✅ 页脚内容主区域（4 列布局） */}
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 px-4 lg:px-0">
-        {/* Newsletter */}
+        {/* ✅ 订阅区域 */}
         <div>
           <h3 className="text-lg font-semibold text-[#1F7D53] mb-4">
             订阅资讯
@@ -21,6 +25,8 @@ const Footer = () => {
           <p className="text-sm text-[#27391C] mb-6">
             订阅即享首单<span className="font-semibold">9折优惠</span>
           </p>
+
+          {/* 📧 邮箱输入与订阅按钮 */}
           <form className="flex">
             <input
               type="email"
@@ -37,7 +43,7 @@ const Footer = () => {
           </form>
         </div>
 
-        {/* Shop Links */}
+        {/* ✅ 商品分类导航 */}
         <div>
           <h3 className="text-lg font-semibold text-[#1F7D53] mb-4">
             选购分类
@@ -78,7 +84,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Support Links */}
+        {/* ✅ 帮助与支持导航 */}
         <div>
           <h3 className="text-lg font-semibold text-[#1F7D53] mb-4">
             帮助支持
@@ -107,11 +113,13 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Follow Us */}
+        {/* ✅ 社交媒体 & 客服联系方式 */}
         <div>
           <h3 className="text-lg font-semibold text-[#1F7D53] mb-4">
             关注我们
           </h3>
+
+          {/* 社交图标链接 */}
           <div className="flex items-center space-x-4 mb-4">
             <a
               href="#"
@@ -138,6 +146,8 @@ const Footer = () => {
               <RiTwitterXLine className="h-4 w-4" />
             </a>
           </div>
+
+          {/* 客服热线 */}
           <p className="text-gray-600 text-sm mb-1">客服热线</p>
           <p className="text-[#27391C] text-sm">
             <FiPhoneCall className="inline-block mr-2" />
@@ -146,7 +156,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Footer Bottom */}
+      {/* ✅ 页脚底部版权信息 */}
       <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
         <p className="text-gray-500 text-sm tracking-tight text-center">
           © 2025 鹏衣有道 | 版权所有
@@ -156,4 +166,5 @@ const Footer = () => {
   );
 };
 
+// ✅ 导出 Footer 组件
 export default Footer;

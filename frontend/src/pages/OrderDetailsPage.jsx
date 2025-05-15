@@ -1,30 +1,39 @@
 // File: OrderDetailsPage.jsx
-// Desc: Order details page
+// Desc: Order details page（订单详情页）
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchOrderDetails } from "../redux/slices/orderSlice";
+import { fetchOrderDetails } from "../redux/slices/orderSlice"; // 获取订单详情的 Redux Action
 
 const OrderDetailsPage = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // 从 URL 中获取订单 ID（例如 /order/123）
   const dispatch = useDispatch();
+
+  // 从 Redux 中获取订单详情数据、加载状态和错误信息
   const { orderDetails, loading, error } = useSelector((state) => state.orders);
 
+  // 页面加载时拉取该订单的详细信息
   useEffect(() => {
     dispatch(fetchOrderDetails(id));
   }, [dispatch, id]);
 
+  // 显示加载状态
   if (loading) return <p>加载中...</p>;
+
+  // 显示错误信息
   if (error) return <p className="text-red-500">出错啦：{error}</p>;
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
       <h2 className="text-2xl md:text-3xl font-bold mb-6">订单详情</h2>
+
+      {/* 若无订单详情，显示提示 */}
       {!orderDetails ? (
         <p>未找到订单信息</p>
       ) : (
         <div className="p-4 sm:p-6 rounded-lg border bg-white shadow-sm">
-          {/* 订单信息 */}
+          {/* 顶部订单信息（编号、时间、状态） */}
           <div className="flex flex-col sm:flex-row justify-between mb-8">
             <div>
               <h3 className="text-lg md:text-xl font-semibold">
@@ -34,6 +43,8 @@ const OrderDetailsPage = () => {
                 下单时间：{new Date(orderDetails.createdAt).toLocaleString()}
               </p>
             </div>
+
+            {/* 支付状态 + 配送状态 */}
             <div className="flex flex-col items-start sm:items-end mt-4 sm:mt-0">
               <span
                 className={`${
@@ -56,7 +67,7 @@ const OrderDetailsPage = () => {
             </div>
           </div>
 
-          {/* 支付与配送信息 */}
+          {/* 支付与配送信息区域 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8 text-sm">
             <div>
               <h4 className="text-base font-semibold mb-2">支付信息</h4>
@@ -73,7 +84,7 @@ const OrderDetailsPage = () => {
             </div>
           </div>
 
-          {/* 商品清单 */}
+          {/* 商品列表区域 */}
           <div className="overflow-x-auto">
             <h4 className="text-lg font-semibold mb-4">商品清单</h4>
             <table className="min-w-full text-gray-700 mb-4 text-sm">
@@ -95,6 +106,7 @@ const OrderDetailsPage = () => {
                           alt={item.name}
                           className="w-12 h-12 object-cover rounded-md"
                         />
+                        {/* 跳转到商品详情页 */}
                         <Link
                           to={`/product/${item.productId}`}
                           className="text-blue-600 hover:underline font-medium"
@@ -114,6 +126,7 @@ const OrderDetailsPage = () => {
             </table>
           </div>
 
+          {/* 返回我的订单按钮 */}
           <Link
             to="/my-orders"
             className="text-sm text-blue-500 hover:underline mt-4 inline-block"
@@ -126,4 +139,4 @@ const OrderDetailsPage = () => {
   );
 };
 
-export default OrderDetailsPage;
+export default OrderDetailsPage; // 导出订单详情页组件

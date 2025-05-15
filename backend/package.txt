@@ -1,0 +1,55 @@
+{
+  "name": "backend", // 项目名称：后台服务（可自行定义）
+  "version": "1.0.0", // 项目版本号
+  "main": "server.js", // 入口文件（定义项目启动的主文件）
+  "scripts": {
+    // ✅ 脚本命令定义，可通过 npm run xxx 执行
+
+    "start": "node backend/server.js", 
+    // 用于正式启动服务器（使用 Node.js 运行 server.js）
+
+    "dev": "nodemon backend/server.js", 
+    // 用于开发阶段自动重启服务器（使用 nodemon 实时监听代码变化）
+
+    "seed": "node seeder.js" 
+    // 用于初始化数据库或批量插入测试数据（seeder.js 文件需自定义）
+  },
+  "keywords": [], // 项目关键字（可选，用于 npm 搜索优化）
+  "author": "",   // 作者信息（可填写姓名或组织）
+  "license": "ISC", // 授权协议（默认 ISC，可根据项目需要更换为 MIT 等）
+  "description": "", // 项目描述（可选）
+
+  "dependencies": {
+    // ✅ 项目所依赖的库（开发和生产环境都需要）
+
+    "bcryptjs": "^2.4.3", 
+    // 用于加密用户密码（注册/登录验证中使用）
+
+    "cloudinary": "^2.6.0", 
+    // 云端图片存储服务，常用于上传并获取图片链接（如上传商品图片）
+
+    "cors": "^2.8.5", 
+    // 允许前后端跨域通信（前端访问本地后端时必需）
+
+    "dotenv": "^16.4.7", 
+    // 用于读取 .env 文件中的环境变量（数据库连接、密钥配置等）
+
+    "express": "^4.21.2", 
+    // Node.js 最常用的 Web 服务框架，用于创建后端 API 接口
+
+    "jsonwebtoken": "^9.0.2", 
+    // 实现用户登录认证的令牌机制（JWT）
+
+    "mongoose": "^8.13.1", 
+    // MongoDB 的 ODM 工具，用于连接数据库、定义模型、执行查询等
+
+    "multer": "^1.4.5-lts.1", 
+    // 中间件，用于处理上传的文件（如图片上传）
+
+    "nodemon": "^3.1.9", 
+    // 开发工具，监听文件变化自动重启服务（只在开发时用）
+
+    "streamifier": "^0.1.1" 
+    // 将图片缓冲区转为流格式，便于与 Cloudinary 等服务配合上传
+  }
+}
